@@ -1,20 +1,14 @@
 const select = document.querySelectorAll('.currency');
 const number = document.getElementById("number");
 const output = document.getElementById("output");
+const currencies = document.getElementById("currencies-list");
+const table = document.getElementById("table");
+const tbodyElement = document.querySelector("table tbody");
 
 $(document).ready(function() {
-	$(function() {
-		$('#datetimepicker6').datetimepicker();
-		$('#datetimepicker7').datetimepicker({
-			useCurrent: false //Important! See issue #1075
-		});
-		$("#datetimepicker6").on("dp.change", function(e) {
-			$('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-		});
-		$("#datetimepicker7").on("dp.change", function(e) {
-			$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-		});
-	});
+	$( function() {
+		$('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+	} );
 });
 
 $.ajax({
@@ -48,7 +42,6 @@ function updatevalue() {
 }
 
 function convert(baseCurrency, targetCurrency, amount) {
-	console.log(baseCurrency, targetCurrency, amount);
 	$.ajax({
 		url: 'http://cur.com/convert',
 		type: "POST",
@@ -66,4 +59,42 @@ function convert(baseCurrency, targetCurrency, amount) {
 			alert(JSON.parse(response.responseText));
 		}
 	});
+}
+
+function historicaldata() {
+	var date = $('#datepicker').datepicker("option", "dateFormat", 'yy-mm-dd' ).val();
+
+	let value = currencies.value;
+	if (value !== "") {
+		let arr = value.split(',');
+		$.ajax({
+			url: 'http://cur.com/historicaldata',
+			type: "POST",
+			data: {
+				list: arr,
+				date: date,
+			},
+			success: function (response) {
+				tbodyElement.innerHTML = '';
+				var thElement = document.querySelector("table th");
+				thElement.textContent = date;
+
+				const curiencies = Object.entries(response);
+				for (var i = 0; i < curiencies.length; i++) {
+					var currency = Object.entries(curiencies[i][1]);
+					tbodyElement.innerHTML += `
+					<tr>
+						<td>${currency[0][0]}</td>
+						<td>${currency[0][1]}</td>
+					</tr>`;
+				}
+
+				modal.classList.remove("hidden");
+				overlay.classList.remove("hidden");
+			},
+			error: function (response) {
+				alert(JSON.parse(response.responseText));
+			}
+		});
+	}
 }

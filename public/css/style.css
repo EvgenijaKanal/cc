@@ -14,7 +14,13 @@ body {
 	cursor: pointer;
 }
 
+.currency-history {
+	margin-top: 20px;
+	margin-left: 50%;
+}
+
 .currency-row-outer {
+	margin-bottom: 25px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -99,4 +105,107 @@ h2 {
 
 .select:hover::after {
 	border-color: #363636;
+}
+
+div.history-div {
+	display:flex;
+	flex-direction:row;
+	border:1px solid grey;
+	padding:1px;
+}
+
+input.history-input {
+	flex-grow:2;
+	border:none;
+}
+
+input.history-input:focus {
+	outline: none;
+}
+
+button {
+	border:1px solid #3273dc;
+	background: #3273dc;
+	color:white;
+}
+
+td {
+	border: 5px;
+	padding: 10px;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #222;
+	position: relative;
+	min-height: 100vh;
+	background-color: #b3e6f4;
+}
+
+.modal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.4rem;
+	width: 450px;
+	padding: 1.3rem;
+	min-height: 250px;
+	position: absolute;
+	z-index: 2;
+	top: 20%;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 15px;
+}
+
+.modal .flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.modal input {
+	padding: 0.7rem 1rem;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 0.9em;
+}
+
+.modal p {
+	font-size: 0.9rem;
+	color: #777;
+	margin: 0.4rem 0 0.2rem;
+}
+
+button {
+	cursor: pointer;
+	border: none;
+	font-weight: 600;
+}
+
+.btn-close {
+	transform: translate(10px, -20px);
+	padding: 0.5rem 0.7rem;
+	background: #eee;
+	border-radius: 50%;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(3px);
+	z-index: 1;
+}
+
+.hidden {
+	display: none;
 }
